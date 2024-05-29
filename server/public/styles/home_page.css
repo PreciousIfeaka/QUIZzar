@@ -1,0 +1,236 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  height: 100vh;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  color: white;
+  width: 100%;
+  height: 80px;
+  padding: 30px 10px;
+  background: #4869fc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+}
+
+header h1 {
+  margin-left: 20px;
+  margin-top: 0px;
+  filter: drop-shadow(0 0 5px) #09001d;
+}
+
+.navbar a {
+  color: white;
+  padding-right: 20px;
+  padding-bottom: 10px;
+}
+
+.navbar a:hover,
+.navbar a.active {
+  color: #1a1199;
+}
+
+.home {
+  margin-left: 20%;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  flex-grow: 1;
+}
+
+.home-content {
+  max-width: 600px;
+  color: white;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+}
+
+.home-content h1 {
+  font-size: 70px;
+  font-weight:  650;
+  text-shadow: 0 0 5px #eb9c9c;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.home-content p {
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 50px;
+  line-height: 1.5;
+  letter-spacing: 1.5px;
+}
+
+.home-content .start-btn {
+  font-size: 20px;
+  color: white;
+  width: 190px;
+  height: 60px;
+  background: #4869fc;
+  border: 2px, solid #fff;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 2px;
+  align-self: center;
+}
+
+.home-content .start-btn:hover {
+  cursor: pointer;
+  background: #6480fc;
+}
+
+.main {
+  display: flex;
+  min-height: 100vh;
+  background: url("../images/QuizzarBack.png") no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.main.active {
+  filter: blur(15px);
+}
+
+.quiz-popup {
+  padding: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(.9);
+  width: 600px;
+  background: #fff;
+  border-radius: 10px;
+  opacity: 0;
+  pointer-events: none;
+  transition: .3s ease-out;
+}
+
+.quiz-popup.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+.quiz-popup h2 {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+  font-size: 30px;
+  color: #4869fc;
+  border-bottom: solid grey 2px;
+}
+
+.quiz-popup .info {
+  letter-spacing: .5px;
+  display: inline-block;
+  font-size: 18px;
+  font-weight: 520;
+  margin: 6px 0;
+}
+
+.quiz-popup .btn-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 15px;
+  margin-top: 15px;
+  border-top: solid grey 2px;
+}
+
+.quiz-popup .btn-group button {
+  font-size: 18px;
+  font-weight: bold;
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  border-color: #4869fc;
+  color: #4869fc;
+}
+
+.quiz-popup .btn-group .continue-btn {
+  background: #4869fc;
+  color: #fff;
+}
+
+.quiz-popup .btn-group .exit-quiz:hover {
+  background: #6480fc;
+  color: white;
+  cursor: pointer;
+}
+
+.quiz-popup .btn-group .continue-btn:hover {
+  cursor: pointer;
+  background: #6480fc;
+}
+
+.container {
+  padding-top: 7%;
+  padding-left: 2%;
+  min-height: 100vh;
+  background: #8da7fc;
+  width: 20%;
+  border-radius: 5px;
+  opacity: 0;
+  pointer-events: none;
+  transition: .8s ease-in-out;
+}
+
+.container .topics-back {
+  margin-top: 40px;
+  font-size: 20px;
+  padding: 10px;
+  border: solid white 2px;
+  border-radius: 7px;;
+  background: rgb(81, 68, 201);
+  color: white;
+  cursor: pointer;
+}
+
+.container .topics-back:hover {
+  background: #1a1199;
+}
+
+.quiz-topics {
+  left: 0;
+  z-index: 100;
+}
+
+.container .quiz-topics ul {
+  min-width: 100%;
+  list-style: none;
+  line-height: 2.5;
+}
+
+.quiz-topics ul a {
+  font-size: 25px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #4869fc;
+  background: #f1efef;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.container.active {
+  left: 0;
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}

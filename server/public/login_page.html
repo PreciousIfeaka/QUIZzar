@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUIZzar</title>
+    <link rel="stylesheet" href="styles/login_page.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+  <body>
+    <div class="login_container">
+      <form action="/login" class="login_form" method="post">
+        <h2>QUIZzar</h2>
+        <label for="email">Email</label>
+        <input autocomplete="off" type="text" id="email" name="email" placeholder="name@email.com" required>
+
+        <label for="password">Password</label>
+        <div class="password-container">
+          <input type="password" id="password" name="password" placeholder="Enter your password" required>
+          <span class="toggle-password" id="togglePassword"><i class="fa fa-eye" aria-hidden="true"></i></span>
+        </div>
+        <div class="field">
+          <input type="checkbox" value="1" name="user[remember_me]" id="user_remember_me">
+          <label class="control-label" for="user_remember_me">Remember me</label>
+        </div>
+           
+        <button type="submit" class="login">Log in</button>
+      </form>
+      <p id="devise-link" class="gap">
+        <a href="/auth/password/new">Forgot your password?</a>
+      </p>
+      <div class="divider-container">
+        <div class="divider-line"></div>
+        <div class="divider-text">or</div>
+        <div class="divider-line"></div>
+      </div>
+
+        <button class="google-signin">
+          <img src="images/google icon.jpg" alt="Google icon" class="google-icon">Continue with Google</button>
+          <div class="sign-in">
+            <p>New to QUIZzar? <a href="/register">Sign up</a></p>
+          </div>
+      </div>
+      
+    <script src="jqueryFiles/passwordToggle.js"></script>
+  </body>
+</html>
