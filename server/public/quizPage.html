@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUIZzar</title>
+    <link rel="stylesheet" href="styles/quiz_page.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+  <body>
+    <main class="main">
+      <section class="quiz-section">
+        <div class="quiz-box">
+          <h1>Quizzar</h1>
+          <div class="quiz-topic">
+            <span>Learn as you quiz</span>
+            <span class="score-header"></span>
+          </div>
+
+          <h2 class="question-text"></h2>
+
+          <div class="option-list">
+            <div class="option">
+              <span></span>
+            </div>
+            <div class="option">
+              <span></span>
+            </div>
+            <div class="option">
+              <span></span>
+            </div>
+            <div class="option">
+              <span></span>
+            </div>
+          </div>
+          
+          <div class="quiz-footer">
+            <span class="question-number"></span>
+            <button class="next-btn">Next</button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+      const nextBtn = document.querySelector(".next-btn");
+      const questionText = document.querySelector(".question-text");
+      const optionList = document.querySelector(".option-list");
+      const questionCounter = document.querySelector(".question-number");
+      const scoreHeader = document.querySelector(".score-header");
+      
+      let score = 0;
+      let questionCount = 0;
+      let questions = [];
+
+      async function fetchQuestions() {
+        try {
+          const response = await fetch(`/questions/api`);
+          questions = await response.json();
+          if (questions.length > 0) {
+            showQuestion(questionCount);
+            countQuestions(questionCount + 1);
+            showScore();
+          } else {
+            questionText.textContent = "No questions available.";
+          }
+        } catch (error) {
+          console.error("Failed to fetch questions", error);
+          questionText.textContent = "Failed to load questions.";
+        }
+      }
+
+      function showQuestion(index) {
+        showScore();
+        questionText.innerHTML = `${questions[index].number}. ${questions[index].question}`;
+
+        let optionTag = `<div class="option"><span>${questions[index].options[0]}</span></div>
+        <div class="option"><span>${questions[index].options[1]}</span></div>
+        <div class="option"><span>${questions[index].options[2]}</span></div>
+        <div class="option"><span>${questions[index].options[3]}</span></div>`
+
+        optionList.innerHTML = optionTag;
+
+        const option = document.querySelectorAll(".option");
+        for (let i = 0; i < option.length; i++) {
+          option[i].addEventListener('click', optionSelected);
+
+        }
+      }
+
+      function optionSelected(answer) {
+        let optionLen = optionList.children.length;
+        let userAnswer = answer.target.textContent;
+        let correctAnswer = questions[questionCount].correct_answer;
+        if (userAnswer == correctAnswer) {
+          score++;
+          answer.target.classList.add('correct');
+        } else {
+          answer.target.classList.add('incorrect');
+
+          // shows the correct answer if you picked the wrong one
+          for (let i = 0; i < optionLen; i++) {
+            if (optionList.children[i].textContent == correctAnswer) {
+              console.log('No issue');
+              optionList.children[i].setAttribute('class', 'option correct');
+            }
+          }
+        }
+        
+        for (let i = 0; i < optionLen; i++) {
+          optionList.children[i].classList.add('disabled');
+        }
+
+        nextBtn.classList.add('active');
+      }
+
+      function countQuestions(index) {
+        let countTag = `<span class="question-number">${index} of ${questions.length} Questions</span>`;
+        questionCounter.innerHTML = countTag;
+      }
+
+      function showScore() {
+        scoreHeader.textContent = `Score: ${score} / ${questions.length}` 
+      }
+
+      nextBtn.onclick = () => {
+        questionCount++;
+        if (questionCount < questions.length) {
+          showQuestion(questionCount);
+          countQuestions(questionCount + 1);
+          nextBtn.classList.remove('active');
+        } else {
+          console.log("Questions complete");
+        }
+      };
+      fetchQuestions(); // Fetch questions on page load
+    });
+    </script>
+  </body>
+</html>
