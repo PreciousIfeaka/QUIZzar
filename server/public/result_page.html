@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QUIZzar</title>
+    <link rel="stylesheet" type="text/css" href="styles/result_page.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="jqueryFiles/resultPage.js"></script>
+  </head>
+  <body>
+    <main class="main">
+      <section class="result-section">
+        <div class="result-box">
+          <h2>Your Result!</h2>
+          <div class="percentage-container">
+            <div class="score-circle">
+              <span class="progress-value">0%</span>
+            </div>
+
+            <span class="score-text">Your Score 0 out of 5</span>
+          </div>
+
+          <div class="buttons">
+            <button class="retakeQuiz-btn" onclick="retakeQuiz()">Retake Quiz</button>
+            <button class="goToHome-btn" onclick="goToHome()">Go To Home</button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script>
+      function goToHome() {
+        window.location.href = "/home";
+      }
+      
+      function retakeQuiz() {
+        window.location.href = "/questions";
+      }
+    </script>
+  </body>
+</html>

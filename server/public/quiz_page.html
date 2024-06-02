@@ -6,41 +6,6 @@
     <title>QUIZzar</title>
     <link rel="stylesheet" href="styles/quiz_page.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  </head>
-  <body>
-    <main class="main">
-      <section class="quiz-section">
-        <div class="quiz-box">
-          <h1>Quizzar</h1>
-          <div class="quiz-topic">
-            <span>Learn as you quiz</span>
-            <span class="score-header"></span>
-          </div>
-
-          <h2 class="question-text"></h2>
-
-          <div class="option-list">
-            <div class="option">
-              <span></span>
-            </div>
-            <div class="option">
-              <span></span>
-            </div>
-            <div class="option">
-              <span></span>
-            </div>
-            <div class="option">
-              <span></span>
-            </div>
-          </div>
-          
-          <div class="quiz-footer">
-            <span class="question-number"></span>
-            <button class="next-btn">Next</button>
-          </div>
-        </div>
-      </section>
-    </main>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
       const nextBtn = document.querySelector(".next-btn");
@@ -48,7 +13,8 @@
       const optionList = document.querySelector(".option-list");
       const questionCounter = document.querySelector(".question-number");
       const scoreHeader = document.querySelector(".score-header");
-      
+      const endPopup = document.querySelector('.end-popup');
+
       let score = 0;
       let questionCount = 0;
       let questions = [];
@@ -71,7 +37,6 @@
       }
 
       function showQuestion(index) {
-        showScore();
         questionText.innerHTML = `${questions[index].number}. ${questions[index].question}`;
 
         let optionTag = `<div class="option"><span>${questions[index].options[0]}</span></div>
@@ -128,13 +93,70 @@
         if (questionCount < questions.length) {
           showQuestion(questionCount);
           countQuestions(questionCount + 1);
+          showScore();
           nextBtn.classList.remove('active');
         } else {
-          console.log("Questions complete");
+          showScore();
+          localStorage.setItem('score', score);
+          localStorage.setItem('questions', JSON.stringify(questions));
+          endPopup.classList.add('active');
         }
       };
-      fetchQuestions(); // Fetch questions on page load
+      fetchQuestions(); // Fetch questions on page loads
     });
     </script>
+    <script>
+      function goToResult() {
+        window.location.href = "/questions/result";
+      }
+
+      function goBackToQuiz() {
+        window.location.href = "/questions";
+      }
+    </script>
+  </head>
+  <body>
+    <main class="main">
+      <section class="quiz-section">
+        <div class="quiz-box">
+          <h1>Quizzar</h1>
+          <div class="quiz-topic">
+            <span>Learn as you quiz</span>
+            <span class="score-header"></span>
+          </div>
+
+          <h2 class="question-text"></h2>
+
+          <div class="option-list">
+            <div class="option">
+              <span></span>
+            </div>
+            <div class="option">
+              <span></span>
+            </div>
+            <div class="option">
+              <span></span>
+            </div>
+            <div class="option">
+              <span></span>
+            </div>
+          </div>
+          
+          <div class="quiz-footer">
+            <span class="question-number"></span>
+            <button class="next-btn">Next</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="end-popup">
+      <p>Are you ready to submit?</p>
+      
+      <div class="endbtn-group">
+        <button class="returnToQuiz-btn" onclick="goBackToQuiz()">Return to Quiz</button>
+        <button class="end-btn" onclick="goToResult()">End Quiz</button>
+      </div>
+    </div>
   </body>
 </html>
