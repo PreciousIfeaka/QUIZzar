@@ -1,23 +1,41 @@
 const express = require('express');
 const path = require('path');
 const loginRouter = express.Router();
-const users = require("./registerRouter")
+const User = require("../models/userModel");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const cookie = require("cookie-parser");
+const { verifyEmail } = require('../config/JWT');
+require('dotenv').config();
 
 
-loginRouter.get('/', (req, res) => {
+loginRouter.get('/login', (req, res) => {
   res.status(200).sendFile(path.join(__dirname, "..", "..", "public", "login_page.html"));
-})
+});
 
-loginRouter.post('/', (req, res) => {
-  if (req.body.email === null || req.body.password === null) {
-    return res.status(400).send("Cannot find user");
-  }
+const createToken = (id) => {
+  return jwt.sign({ id }, process.env.SECRET_KEY);
+}
+
+loginRouter.post('/login', verifyEmail, async (req, res) => {
   try {
-    console.log(req.body.email, req.body.password);
-    console.log("Verified user");
-    res.redirect("/home");
-  } catch {
-    res.status(500).send();
+    const { email, password } = req.body;
+    const findUser = await User.findOne({ email: email });
+
+    if(findUser) {
+      const match = await bcrypt.compare(password, findUser.password);
+      if (match) {
+        // create token
+        const token = createToken(findUser.id);
+
+        // store token in  cookie
+        res.cookie('access-token', token);
+        console.log("Valid User");
+        res.redirect("/home");
+      } else { console.log("Invalid Password") };
+    } else {console.log("User is not registered")};
+  } catch (err) {
+    console.log(err);
   }
 })
 

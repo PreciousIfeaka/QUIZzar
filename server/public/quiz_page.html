@@ -14,14 +14,15 @@
       const questionCounter = document.querySelector(".question-number");
       const scoreHeader = document.querySelector(".score-header");
       const endPopup = document.querySelector('.end-popup');
-
+      const selectedCategory = localStorage.getItem('selectedCategory');
+      
       let score = 0;
       let questionCount = 0;
       let questions = [];
 
-      async function fetchQuestions() {
+      async function fetchQuestions(category) {
         try {
-          const response = await fetch(`/questions/api`);
+          const response = await fetch(`/quiz-session/api?category=${category}`);
           questions = await response.json();
           if (questions.length > 0) {
             showQuestion(questionCount);
@@ -65,8 +66,7 @@
 
           // shows the correct answer if you picked the wrong one
           for (let i = 0; i < optionLen; i++) {
-            if (optionList.children[i].textContent == correctAnswer) {
-              console.log('No issue');
+            if (optionList.children[i].textContent === correctAnswer) {
               optionList.children[i].setAttribute('class', 'option correct');
             }
           }
@@ -102,16 +102,16 @@
           endPopup.classList.add('active');
         }
       };
-      fetchQuestions(); // Fetch questions on page loads
+      fetchQuestions(selectedCategory); // Fetch questions on page loads
     });
     </script>
     <script>
       function goToResult() {
-        window.location.href = "/questions/result";
+        window.location.href = "/quiz-session/result";
       }
 
       function goBackToQuiz() {
-        window.location.href = "/questions";
+        window.location.href = "/quiz-session";
       }
     </script>
   </head>

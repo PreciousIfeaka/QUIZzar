@@ -9,7 +9,7 @@
   </head>
   <body>
     <div class="login_container">
-      <form action="/login" class="login_form" method="post">
+      <form action="/user/login" class="login_form" method="post">
         <h2>QUIZzar</h2>
         <label for="email">Email</label>
         <input autocomplete="off" type="text" id="email" name="email" placeholder="name@email.com" required>
@@ -38,10 +38,10 @@
         <button class="google-signin">
           <img src="images/google icon.jpg" alt="Google icon" class="google-icon">Continue with Google</button>
           <div class="sign-in">
-            <p>New to QUIZzar? <a href="/register">Sign up</a></p>
+            <p>New to QUIZzar? <a href="/user/register">Sign up</a></p>
           </div>
       </div>
       
-    <script src="jqueryFiles/passwordToggle.js"></script>
+    <script src="jqueryFiles/loginPasswordToggle.js"></script>
   </body>
 </html>

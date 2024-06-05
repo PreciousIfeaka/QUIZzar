@@ -57,6 +57,28 @@
   padding-right: 40px;
  }
 
+.error-visible {
+  font-size: 15px;
+  display: block;
+  color: red;
+}
+
+.mail {
+  font-size: 15px;
+  display: block;
+}
+
+.error {
+  font-size: 14px;
+  display: block;
+}
+
+.success {
+  font-size: 15px;
+  color: green;
+  display: block;
+}
+
  .toggle-password {
   position: absolute;
   right: 10px;

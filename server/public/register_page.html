@@ -9,19 +9,22 @@
   </head>
   <body>
     <div class="register_container">
-      <form action="/register" class="register_form" method="post">
+      <form action="/user/register" class="register_form" method="post">
         <h2>QUIZzar</h2>
+
 
         <label for="name">Full Name</label>
         <input autocomplete="off" type="text" id="name" name="name" placeholder="Enter your full name" required>
 
         <label for="email">Email</label>
-        <input autocomplete="off" type="text" id="email" name="email" placeholder="name@email.com" required>
+        <input autocomplete="off" type="text" id="email" name="email" placeholder="Enter a valid gmail address" required>
+        <div class="email-error mail"></div>
 
         <label for="password">Password</label>
         <div class="password-container">
           <input type="password" id="password" name="password" placeholder="Enter your password" required>
           <span class="toggle-password" id="togglePassword"><i class="fa fa-eye" aria-hidden="true"></i></span>
+          <div class="password-error error">Password length must be 8 characters with special character</div>
         </div>
            
         <button type="submit" class="register">Register</button>
@@ -36,9 +39,9 @@
           <img src="./images/google icon.jpg" alt="Google icon" class="google-icon">Continue with Google</button>
       </div>
       <div class="login">
-        <p>Already on QUIZzar? <a href="/login">Log in</a></p>
+        <p>Already on QUIZzar? <a href="/user/login">Log in</a></p>
       </div>
     </div>  
-    <script src="jqueryFiles/passwordToggle.js"></script>
+    <script src="jqueryFiles/registerPasswordToggle.js"></script>
   </body>
 </html>
