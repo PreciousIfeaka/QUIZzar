@@ -33,6 +33,7 @@ const verifyEmail = async (req, res, next) => {
       console.log("Email doesn't exist");
     }
   } catch(err) {
+    console.log("Not It");
     console.log(err.message);
   }
 }

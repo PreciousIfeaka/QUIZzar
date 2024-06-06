@@ -11,7 +11,9 @@ const MongoStore = require("connect-mongo");
 const cookieparser = require('cookie-parser');
 const { isLogin } = require('./config/auth');
 const bodyParser = require('body-parser');
+const passport = require("passport");
 require("dotenv").config();
+require("./config/googleOAuth");
 
 const app = express();
 
@@ -35,8 +37,6 @@ app.use(session({
     maxAge: 60 * 60 * 1000
   }
 }));
-
-// passport middleware
 
 
 // root routes for user registeration and login
@@ -68,20 +68,39 @@ app.get("/quiz-session/result", (req, res) => {
 
 app.get("/logout", (req, res, next) => {
   res.cookie('access-token', "", { maxAge: 1 });
-  req.logout((err) => {
-    if (err) { return next(err); }
-    req.session.destroy((err) => {
-      if (err) {
-        return res.status(500).send("Failed to destroy session during logout.");
-      }
-      res.clearCookie('connect.sid');
-      res.redirect('user/login');
-    });
-  });
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).send("Failed to destroy session during logout.");
+    }
+    res.clearCookie('connect.sid');
+    res.redirect('/user/login');
+  })
 });
 
 app.get('/', (req, res) => {
   res.redirect('/user/register');
 });
+
+// passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+// google OAuth routes
+
+app.use("/auth", express.static(path.join(__dirname, "..", "public")));
+app.get('/auth/google',
+  passport.authenticate('google', { scope:
+      [ 'email', 'profile' ] }
+));
+
+app.get( '/auth/google/callback',
+    passport.authenticate( 'google', {
+        successRedirect: '/auth/success',
+        failureRedirect: '/auth/google/failure'
+}));
+
+app.get("/auth/success", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "public", "home_page.html"));
+})
 
 module.exports = app;

@@ -11,7 +11,6 @@ require('dotenv').config();
 
 
 loginRouter.get('/login', isLogout, (req, res) => {
-  console.log(req.session.userId);
   res.status(200).sendFile(path.join(__dirname, "..", "..", "public", "login_page.html"));
 });
 
@@ -34,7 +33,7 @@ loginRouter.post('/login', verifyEmail, async (req, res) => {
         res.cookie('access-token', token);
         console.log("Valid User");
         req.session.userId = findUser.id;
-        console.log(req.session.userId);
+        // console.log(req.session.userId);
         return res.redirect("/home");
       } else {
         console.log("Invalid Password");
@@ -44,6 +43,7 @@ loginRouter.post('/login', verifyEmail, async (req, res) => {
       console.log("User is not registered");
     };
   } catch (err) {
+    console.log("it");
     console.log(err);
   }
 })

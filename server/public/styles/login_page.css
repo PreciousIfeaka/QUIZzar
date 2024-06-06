@@ -141,7 +141,8 @@
  }
 
  .google-signin:hover {
-  background-color: #d3d8f5; 
+  background-color: #d3d8f5;
+  cursor: pointer;
  }
 
  .google-icon {
