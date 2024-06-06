@@ -23,13 +23,17 @@ const requiredLogin = async (req, res, next) => {
 const verifyEmail = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
-    if (user.isVerified) {
-      next();
+    if (user) {
+      if (user.isVerified) {
+        return next();
+      } else {
+        return res.send(`<p>Please check your email to verify your account</p>`);
+      }
     } else {
-      res.send(`<p>Please check your email to verify your account</p>`);
+      console.log("Email doesn't exist");
     }
   } catch(err) {
-    console.log(err);
+    console.log(err.message);
   }
 }
 

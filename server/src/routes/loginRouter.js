@@ -4,12 +4,14 @@ const loginRouter = express.Router();
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const {isLogout} = require("../config/auth");
 const cookie = require("cookie-parser");
 const { verifyEmail } = require('../config/JWT');
 require('dotenv').config();
 
 
-loginRouter.get('/login', (req, res) => {
+loginRouter.get('/login', isLogout, (req, res) => {
+  console.log(req.session.userId);
   res.status(200).sendFile(path.join(__dirname, "..", "..", "public", "login_page.html"));
 });
 
@@ -31,9 +33,16 @@ loginRouter.post('/login', verifyEmail, async (req, res) => {
         // store token in  cookie
         res.cookie('access-token', token);
         console.log("Valid User");
-        res.redirect("/home");
-      } else { console.log("Invalid Password") };
-    } else {console.log("User is not registered")};
+        req.session.userId = findUser.id;
+        console.log(req.session.userId);
+        return res.redirect("/home");
+      } else {
+        console.log("Invalid Password");
+        return res.redirect("/user/login");
+      }
+    } else {
+      console.log("User is not registered");
+    };
   } catch (err) {
     console.log(err);
   }
