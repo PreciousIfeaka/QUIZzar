@@ -1,21 +1,19 @@
 const User = require("../models/userModel");
 
-const isLogin = async(req, res, next) => {
-  try {
-    if (req.session.userId) {}
-    else {
-      return res.redirect("/")
+const isLogedin = (req, res, next) => {
+  try{
+    if (req.isAuthenticated() || req.user || req.session.isAuth) {
+      return next();
+    } else {
+      res.redirect('/');
     }
-    next();
-  } catch (error) {
-    console.log("AGAIN");
-    console.log(error.message);
+  } catch(err) {
+    console.log(err.message);
   }
 }
-
-const isLogout = async(req, res, next) => {
+const isLogOut = async(req, res, next) => {
   try {
-    if (req.session.userId) {
+    if (req.session.isAuth || req.isAuthenticated()) {
       return res.redirect("/home");
     } else {}
     next();
@@ -25,5 +23,5 @@ const isLogout = async(req, res, next) => {
 }
 
 module.exports = {
-  isLogin, isLogout
+  isLogedin, isLogOut
 }

@@ -6,10 +6,10 @@ const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const crypto = require('crypto');
-const { isLogout, isLogin } = require("../config/auth");
+const { isLogOut } = require("../config/auth");
 require("dotenv").config();
 
-registerRouter.get('/register', isLogout, (req, res) => {
+registerRouter.get('/register', isLogOut, (req, res) => {
   res.status(200).sendFile(path.join(__dirname, "..", "..", "public", "register_page.html"));
 });
 
@@ -62,7 +62,6 @@ registerRouter.post('/register', async (req, res) => {
       }
     });
     res.send(`<h3>Please, check your email to verify your account</h3>`);
-    // res.redirect('/user/login');
   } catch (err) {
     console.log(err);
     res.redirect("/user/register");

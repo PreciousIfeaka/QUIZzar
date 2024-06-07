@@ -14,10 +14,30 @@
         <h1 class="welcome-text">Welcome!</h1>
   
         <nav class="navbar">
-          <a href="#" class="active">Home</a>
-          <a href="#">About</a>
-          <a href="#">Contact</a>
-          <a href="/logout">Logout</a>
+          <div class="drop-down">
+            <a href="/home" class="active">Home</a>
+          </div>
+          <div class="drop-down">
+            <a>About</a>
+            <div class="dropdown-content">
+              <ul class="about-list">
+                <li>An online Interactive quiz platform</li>
+                <li>Aimed at helping you have quiz sessioons</li>
+                <li>For fun and knowledge</li>
+              </ul>
+            </div>
+          </div>
+          <div class="drop-down">
+            <a>Contact</a>
+            <div class="dropdown-content">
+              <p><a href=preciousifeaka@gmail.com>Link to my email</a></p>
+              <p><a href="https://www.linkedin.com/in/precious-enuagwune-029b311b3/">Link to my linkedin</a></p>
+              <p><a href="https://github.com/PreciousIfeaka">Link to my GitHub</a></p>
+            </div>
+          </div>
+          <div class="drop-down">
+            <a href="/logout">Logout</a>
+          </div>
         </nav>
       </header>
 
@@ -39,10 +59,12 @@
 
       <section class="home">
         <div class="home-content">
-          <h1>QUIZzar!</h1>
-          <p>Baby red chinehgd heufyuf gfuysgyd gdtytdi duyduyft
-            dhudyuf gdguyyuwh. uyfufgugyui ggcggc cuddutf gfgfgdu
-            gvfguvf vfufgyf vfuvtfytf </p>
+          <h1>QUIZzar</h1>
+          <p>QUIZzar is an interactive trivia quiz website where you can have
+            quiz sessions based on the topic area you have chosen.
+            On taking this quiz, you will be exposed to questions that will improve your knowledge-based.
+            <br>Happy quizing!
+          </p>
           <button class="start-btn">Start Quiz</button>
         </div>
       </section>
@@ -51,14 +73,13 @@
     
     <div class="quiz-popup">
       <h2>QUIZzar Session Guide</h2>
-      <span class="info">1. Click on the take a quiz button</span>
+      <span class="info">1. Click on the take a Continue button</span>
       <span class="info">2. Select the quiz topic you want from the quiz field popup</span>
-      <span class="info">3. Click on the process to quiz button</span>
-      <span class="info">4. Select the number of questions you want to answer</span>
-      <span class="info">5. Click on proceed.</span>
+      <span class="info">3. Select the number of questions you want to answer</span>
+      <span class="info">4. Click on proceed.</span>
 
       <div class="btn-group">
-        <button class="exit-quiz">Exit Quiz</button>
+        <button class="exit-quiz">Back</button>
         <button class="continue-btn">Continue</button>
       </div>
     </div>

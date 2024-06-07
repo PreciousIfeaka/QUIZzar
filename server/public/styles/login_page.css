@@ -140,6 +140,9 @@
   font-size: 16px;
  }
 
+ a {
+   text-decoration: none;
+ }
  .google-signin:hover {
   background-color: #d3d8f5;
   cursor: pointer;

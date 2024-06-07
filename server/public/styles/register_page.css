@@ -20,7 +20,7 @@
     padding: 20px;
     background-color: #D3D3D3;
     border-radius: 8px;
-    box-shadow: 100px 0 220px rgba(0, 0, 0, 0.1);
+    box-shadow: 10px 0 20px rgba(0, 0, 0, 0.4);
  }
 
  .register_form {

@@ -1,10 +1,10 @@
 const express = require("express");
 const path = require('path');
-const { requiredLogin } = require("../config/JWT");
+const { isLogedin } = require('../config/auth');
 
 const homeRouter = express.Router();
 
-homeRouter.get("/", requiredLogin, (req, res) => {
+homeRouter.get("/", isLogedin, (req, res) => {
   res.sendFile(path.join(__dirname, "..", "..", "public", "home_page.html"));
 });
 
