@@ -24,7 +24,7 @@ on:
 
 env:
   AZURE_WEBAPP_NAME: QUIZzar     # set this to your application's name
-  NODE_VERSION: '20.x'                # set this to the node version to use
+  NODE_VERSION: '20.x'                # set this to the node version to be used
 
 permissions:
   contents: read
