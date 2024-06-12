@@ -4,7 +4,7 @@
   "description": "Alx webstack portfolio project",
   "main": "server.js",
   "scripts": {
-    "start": "npm run watch --prefix server"
+    "start": "cd server && npm run watch"
   },
   "repository": {
     "type": "git",
