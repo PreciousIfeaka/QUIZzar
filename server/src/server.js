@@ -5,5 +5,5 @@ const port = process.env.INTERNAL_RUNTIME_PORT || 8080;
 const server = http.createServer(app);
 
 server.listen(port, () => {
-  console.log(`Starting server, listening on localhost:${PORT}`);
+  console.log(`Starting server, listening on localhost:${port}`);
 });
