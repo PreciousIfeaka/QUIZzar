@@ -10,7 +10,7 @@ require('dotenv').config();
 
 
 loginRouter.get('/login', isLogOut, async (req, res) => {
-  await res.sendFile(path.join(__dirname, "..", "..", "public", "login_page.html"));
+  await res.sendFile(path.join(__dirname, "..", "..", "..", "client", "login_page.html"));
 });
 
 loginRouter.post('/login', verifyEmail, async (req, res) => {

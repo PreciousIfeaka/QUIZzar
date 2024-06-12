@@ -10,7 +10,7 @@ const { isLogOut } = require("../config/auth");
 require("dotenv").config();
 
 registerRouter.get('/register', isLogOut, (req, res) => {
-  res.status(200).sendFile(path.join(__dirname, "..", "..", "public", "register_page.html"));
+  res.status(200).sendFile(path.join(__dirname, "..", "..", "..", "client", "register_page.html"));
 });
 
 // create a transport media using nodemailer

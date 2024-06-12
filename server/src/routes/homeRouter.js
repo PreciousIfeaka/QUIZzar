@@ -5,7 +5,7 @@ const { isLogedin } = require('../config/auth');
 const homeRouter = express.Router();
 
 homeRouter.get("/", isLogedin, (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "..", "public", "home_page.html"));
+  res.sendFile(path.join(__dirname, "..", "..", "..", "client", "home_page.html"));
 });
 
 module.exports = homeRouter;

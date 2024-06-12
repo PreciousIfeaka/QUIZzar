@@ -8,7 +8,6 @@ const questionsRouter = require('./routes/questionsRouter');
 const session = require("express-session");
 const mongoose = require('mongoose');
 const MongoDBSession = require('connect-mongodb-session')(session);
-// const cookieparser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const passport = require("passport");
 require("dotenv").config();
@@ -18,7 +17,7 @@ const app = express();
 
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "..", "public")));
+app.use(express.static(path.join(__dirname, "..", "..", "client")));
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({extended: true }));
 // app.use(cookieparser());
@@ -44,12 +43,12 @@ app.use(passport.session());
 
 
 // root routes for user registeration and login
-app.use("/user", express.static(path.join(__dirname, "..", "public")));
+app.use("/user", express.static(path.join(__dirname, "..", "..", "client")));
 app.use("/user", loginRouter);
 app.use("/user", registerRouter);
 
 app.get("/quiz-session", (req, res, next) => {
-  res.sendFile(path.join(__dirname, "..", "public", "quiz_page.html"), (err) => {
+  res.sendFile(path.join(__dirname, "..", "..", "client", "quiz_page.html"), (err) => {
     if (err) {
       next(err);
     }
@@ -58,14 +57,14 @@ app.get("/quiz-session", (req, res, next) => {
 
 app.use("/quiz-session/api", questionsRouter); // api route to obtain the quiz questions
 
-app.use('/quiz-session', express.static(path.join(__dirname, "..", 'public')));
+app.use('/quiz-session', express.static(path.join(__dirname, "..", "..", "client")));
 
 app.get("/quiz-session/result", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "public", "result_page.html"));
+  res.sendFile(path.join(__dirname, "..", "..", "client", "result_page.html"));
 });
 
 // google OAuth routes
-app.use("/auth", express.static(path.join(__dirname, "..", "public")));
+app.use("/auth", express.static(path.join(__dirname, "..", "..", "client")));
 
 app.get('/auth/google',
   passport.authenticate('google', { scope:
