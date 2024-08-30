@@ -1,4 +1,4 @@
-import generateQuestions from "../../model/questionsModel.js";
+import generateQuestions from "../../server/utils/generateQuestions";
 
 const nextBtn = document.querySelector(".next-btn");
 const questionText = document.querySelector(".question-text");
@@ -14,7 +14,6 @@ nextBtn.onclick = async () => {
   questionText.classList.add('active');
   questionCount++;
   const questions = await generateQuestions(url);
-  console.log(questions);
   if (questions.length > 0) {
     showQuestion(questionCount, questions);
   } else {console.log('No available questions')}

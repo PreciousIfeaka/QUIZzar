@@ -8,8 +8,11 @@ const questionsRouter = require('./routes/questionsRouter');
 const session = require("express-session");
 const mongoose = require('mongoose');
 const MongoDBSession = require('connect-mongodb-session')(session);
+const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser');
 const passport = require("passport");
+const log = require("./utils/logger");
+const { authenticateJWT } = require('./middleware/auth.middleware');
 require("dotenv").config();
 require("./config/googleOAuth");
 
@@ -17,17 +20,22 @@ const app = express();
 
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "..", "..", "client")));
+app.use(express.static(path.join(__dirname, "..", "client")));
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true }));
-// app.use(cookieparser());
 
-// mogoose connection
-mongoose.connect("mongodb://localhost:27017/userData").then((connect) => console.log("Connected"));
+mongoose.connect(
+  process.env.MONGO_CONNECT_STRING
+).then(
+  () => log.info("db connected successfully")
+).catch(
+  (error) => log.error(error.message)
+);
 
 const store = new MongoDBSession({
-  uri: "mongodb://localhost:27017/userData",
-  collection: "sessions",
+  uri: process.env.MONGO_CONNECT_STRING,
+  collection: "quizzar-collection",
 });
 
 app.use(session({
@@ -37,34 +45,35 @@ app.use(session({
   store: store,
 }));
 
-// passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
 
-// root routes for user registeration and login
-app.use("/user", express.static(path.join(__dirname, "..", "..", "client")));
-app.use("/user", loginRouter);
-app.use("/user", registerRouter);
+app.use("/", express.static(path.join(__dirname, "..", "client")));
+app.use("/", loginRouter);
+app.use("/", registerRouter);
+
+app.get('/', (req, res) => {
+  res.redirect("/auth/register");
+});
 
 app.get("/quiz-session", (req, res, next) => {
-  res.sendFile(path.join(__dirname, "..", "..", "client", "quiz_page.html"), (err) => {
+  res.sendFile(path.join(__dirname, "..", "client", "quiz_page.html"), (err) => {
     if (err) {
       next(err);
     }
   });
 });
 
-app.use("/quiz-session/api", questionsRouter); // api route to obtain the quiz questions
+app.use("/quiz-session/api", authenticateJWT, questionsRouter); // api route to obtain the quiz questions
 
-app.use('/quiz-session', express.static(path.join(__dirname, "..", "..", "client")));
+app.use('/quiz-session', authenticateJWT, express.static(path.join(__dirname, "..", "client")));
 
-app.get("/quiz-session/result", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "..", "client", "result_page.html"));
+app.get("/quiz-session/result", authenticateJWT, (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "client", "result_page.html"));
 });
 
-// google OAuth routes
-app.use("/auth", express.static(path.join(__dirname, "..", "..", "client")));
+app.use("/auth", express.static(path.join(__dirname, "..", "client")));
 
 app.get('/auth/google',
   passport.authenticate('google', { scope:
@@ -87,22 +96,11 @@ app.get("/auth/google/failure", (req, res) => {
   res.send(`<p> Something went wrong. Go back to <a href="/user/login">login page</a>`);
 })
 
+app.use("/", homeRouter);
+
 app.get("/logout", (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      return res.status(500).send("Failed to destroy session during logout.");
-    }
-    res.redirect('/user/login');
-  })
-});
-
-// root route for the home page
-app.use("/home", homeRouter);
-
-
-app.get('/', (req, res) => {
-  res.redirect('/user/register');
-  req.session.isAuth = true;
+  res.clearCookie('token');
+  res.redirect("/auth/login");
 });
 
 module.exports = app;

@@ -1,15 +1,47 @@
 {
   "name": "quizzar",
   "version": "1.0.0",
-  "description": "Alx webstack portfolio project",
-  "main": "server.js",
+  "description": "Interactive quiz website",
+  "main": "server/server.js",
   "scripts": {
-    "start": "cd server && npm run watch"
+    "start": "node server/server.js",
+    "start:dev": "nodemon server/server.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
-    "url": "QUIZzar"
+    "url": "PreciousIfeaka"
   },
   "author": "PreciousIfeaka",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "connect-mongo": "^5.1.0",
+    "connect-mongodb-session": "^5.0.0",
+    "cookie": "^0.6.0",
+    "cookie-parser": "^1.4.6",
+    "crypto": "^1.0.1",
+    "dayjs": "^1.11.13",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "fs": "^0.0.1-security",
+    "jest": "^29.7.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.7.0",
+    "mongoose": "^8.4.1",
+    "nodemailer": "^6.9.13",
+    "passport": "^0.7.0",
+    "passport-google-oauth2": "^0.2.0",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7",
+    "pino": "^9.3.2",
+    "pino-pretty": "^11.2.2",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5",
+    "node-fetch": "^3.3.2",
+    "nodemon": "^3.1.1"
+  }
 }

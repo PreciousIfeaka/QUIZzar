@@ -1,4 +1,4 @@
-const generateQuestions = require("../src/models/questionsModel");
+const generateQuestions = require("../utils/generateQuestions");
 
 async function httpFetchQuestions(req, res) {
   const amount = 10;

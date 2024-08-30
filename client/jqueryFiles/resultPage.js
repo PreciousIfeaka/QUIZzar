@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let progress = setInterval(() => {
     progressInitialValue++;
-    // console.log(progressInitialValue);
 
     progressValue.textContent = `${progressInitialValue}%`;
     scoreCircle.style.background = `conic-gradient(#959ff3 ${(progressInitialValue / 100) * 360}deg, rgba(255, 255, 255, .1) 0deg)`;
