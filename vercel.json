@@ -10,7 +10,10 @@
     {
       "src": "/(.*)",
       "dest": "/client/$1",
-      "continue": true
+      "continue": true,
+      "headers": {
+        "cache-control": "no-store"
+      }
     },
     {
       "src": "/.*",
