@@ -7,6 +7,17 @@
     }
   ],
   "routes": [
-    {  "src": "/.*", "dest": "server/server.js" }
+    {
+      "src": "/(images|jqueryFiles|styles)/.*",
+      "dest": "/client/$1"
+    },
+    {
+      "src": "/(homepage|login).html",
+      "dest": "/client/$1.html"
+    },
+    {
+      "src": "/.*",
+      "dest": "server/server.js"
+    }
   ]
 }
