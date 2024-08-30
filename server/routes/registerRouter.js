@@ -4,10 +4,10 @@ const { registerPage, httpRegister, smtpVerifyEmail } = require("../controller/r
 
 const registerRouter = express.Router();
 
-registerRouter.get("/auth/register", registerPage)
+registerRouter.get("/register", registerPage)
 
-registerRouter.post("/auth/register", httpRegister);
+registerRouter.post("/register", httpRegister);
 
-registerRouter.get("/auth/verify-email", smtpVerifyEmail);
+registerRouter.get("/verify-email", smtpVerifyEmail);
 
 module.exports = registerRouter;

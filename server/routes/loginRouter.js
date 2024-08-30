@@ -4,8 +4,8 @@ require('dotenv').config();
 
 const loginRouter = express.Router();
 
-loginRouter.get("/auth/login", signinPage);
+loginRouter.get("/login", signinPage);
 
-loginRouter.post("/auth/login", signin);
+loginRouter.post("/login", signin);
 
 module.exports = loginRouter;

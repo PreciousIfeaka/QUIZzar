@@ -1,6 +1,6 @@
 const express = require('express');
-const path = require('path');
-
+const path = require("path");
+const cors = require("cors");
 const loginRouter = require("./routes/loginRouter");
 const registerRouter = require('./routes/registerRouter');
 const homeRouter = require('./routes/homeRouter');
@@ -12,12 +12,24 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require('body-parser');
 const passport = require("passport");
 const log = require("./utils/logger");
-const { authenticateJWT } = require('./middleware/auth.middleware');
+const { routeNotFound } = require('./middleware/error');
 require("dotenv").config();
 require("./config/googleOAuth");
 
 const app = express();
-
+app.options("*", cors());
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allowedHeaders: [
+      "Origin",
+      "X-Requested-With",
+      "Content-Type",
+      "Authorization",
+    ],
+  }),
+);
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "..", "client")));
@@ -49,31 +61,17 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-app.use("/", express.static(path.join(__dirname, "..", "client")));
-app.use("/", loginRouter);
-app.use("/", registerRouter);
+app.use("/auth", express.static(path.join(__dirname, "..", "client")));
+app.use("/auth", loginRouter);
+app.use("/auth", registerRouter);
 
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   res.redirect("/auth/register");
 });
 
-app.get("/quiz-session", (req, res, next) => {
-  res.sendFile(path.join(__dirname, "..", "client", "quiz_page.html"), (err) => {
-    if (err) {
-      next(err);
-    }
-  });
-});
+app.use("/quiz-session", express.static(path.join(__dirname, "..", "client")));
 
-app.use("/quiz-session/api", authenticateJWT, questionsRouter); // api route to obtain the quiz questions
-
-app.use('/quiz-session', authenticateJWT, express.static(path.join(__dirname, "..", "client")));
-
-app.get("/quiz-session/result", authenticateJWT, (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "client", "result_page.html"));
-});
-
-app.use("/auth", express.static(path.join(__dirname, "..", "client")));
+app.use("/quiz-session", questionsRouter);
 
 app.get('/auth/google',
   passport.authenticate('google', { scope:
@@ -93,7 +91,7 @@ app.get("/auth/success", (req, res) => {
 });
 
 app.get("/auth/google/failure", (req, res) => {
-  res.send(`<p> Something went wrong. Go back to <a href="/user/login">login page</a>`);
+  res.send(`<p> Something went wrong. Go back to <a href="/auth/login">login page</a>`);
 })
 
 app.use("/", homeRouter);
@@ -102,5 +100,7 @@ app.get("/logout", (req, res) => {
   res.clearCookie('token');
   res.redirect("/auth/login");
 });
+
+app.use(routeNotFound);
 
 module.exports = app;

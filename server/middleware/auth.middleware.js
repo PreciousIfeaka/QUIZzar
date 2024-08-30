@@ -4,7 +4,7 @@ const log = require("../utils/logger");
 const authenticateJWT = async (req, res, next) => {
   const token = await req.cookies.token;
   if (!token) {
-    res.sendStatus(401);
+    return res.sendStatus(401);
   }
 
   jwt.verify(token, process.env.AUTH_TOKEN_KEY, (err, user) => {
