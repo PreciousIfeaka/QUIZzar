@@ -8,12 +8,9 @@
   ],
   "routes": [
     {
-      "src": "/(images|jqueryFiles|styles)/.*",
-      "dest": "/client/$1"
-    },
-    {
-      "src": "/(home_page|login_page|quiz_page|register_page|result_page).html",
-      "dest": "/client/$1.html"
+      "src": "/(.*)",
+      "dest": "/client/$1",
+      "continue": true
     },
     {
       "src": "/.*",
