@@ -6,7 +6,7 @@ require("dotenv").config();
 passport.use(new GoogleStrategy({
     clientID:     process.env.OAUTH_CLIENT_ID,
     clientSecret: process.env.OAUTH_CLIENT_SECRET,
-    callbackURL: "http://localhost:5001/auth/google/callback",
+    callbackURL: `${process.env.GOOGLE_OAUTH_URL}/auth/google/callback`,
     passReqToCallback   : true
   },
   
@@ -17,12 +17,13 @@ passport.use(new GoogleStrategy({
       user = new User({
         name: profile.displayName,
         email: profile.emails[0].value,
-        googleId: profile.id
+        googleId: profile.id,
+        emailToken: accessToken
       });
       await user.save();
     }
     done(null, user);
-    }
+  }
 ));
 
 passport.serializeUser((user, done) => {
